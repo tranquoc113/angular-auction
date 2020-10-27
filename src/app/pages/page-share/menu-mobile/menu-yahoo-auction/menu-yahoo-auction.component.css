@@ -1,0 +1,24 @@
+.menu-child-mobile{
+  display: none;
+}
+.menu-parent-mobile li:hover .menu-child-mobile{
+  display: block;
+}
+.menu-parent-mobile >li:hover >a{
+  background: #f83e3e;
+}
+.menu-parent-mobile li a{
+  padding: 5px 20px;
+  display: block;
+  color: rgb(68, 68, 68);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-parent-mobile li{
+  padding: 5px 20px;
+}
+.menu-child-mobile > a{
+  color: #ff0000;
+}

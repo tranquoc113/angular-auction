@@ -1,0 +1,503 @@
+.bootstrap-touchspin .input-group-btn .bootstrap-touchspin-btn {
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #dfdfdf;
+  background: #fff;
+  height: 30px;
+  padding: 0 10px;
+}
+.bootstrap-touchspin input{
+  height: 30px;
+  width: 50px;
+}
+.input-group{
+  width: auto;
+}
+.button_secondary {
+  display: inline-block;
+  text-align: center;
+  outline: none;
+  padding: 5px 10px;
+  overflow: hidden;
+  border: solid 1px #ff0000;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background-clip: padding-box;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  transition: all .3s ease;
+  background: #fff;
+  /*color: #f8a136;*/
+}
+
+.Price__body {
+  margin: 0 15px;
+}
+
+.Price__value {
+  color: #cb5201;
+  font-size: 24px;
+}
+
+.Price__tax {
+  display: inline-block;
+  color: #000;
+  font-size: 50%;
+  font-weight: 400;
+}
+
+.Count__count {
+  margin: 4px 0 4px 0;
+  padding: 0 10px;
+}
+
+.Count__title {
+  margin-bottom: 5px;
+}
+
+.Count__number {
+  font-size: 150%;
+}
+
+.Count__count--sideLine {
+  border-left: 1px dotted #ccc;
+  /* padding-right: 0; */
+}
+
+.Button--watch {
+  position: relative;
+  display: block;
+  width: 307px;
+  height: 48px;
+  border: 1px solid #9f9e98;
+  color: #33322f;
+  background-color: #f6f6f1;
+  text-align: center;
+  border-radius: 4px;
+  font-family: inherit;
+  vertical-align: bottom;
+  cursor: pointer;
+  -webkit-transition: opacity .1s ease-out;
+  -moz-transition: opacity .1s ease-out;
+  transition: opacity .1s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  *zoom: 1;
+  width: 48px;
+  height: 21px;
+  padding-top: 27px;
+  padding-bottom: 15px;
+  background-image: url(https://cdn1.imggmi.com/uploads/2019/11/14/274b27f4181960d4cd6d1ff245561d85-full.png);
+  background-repeat: no-repeat;
+  background-position: center 4px;
+  line-height: 1.2;
+  font-size: 68.75%;
+}
+
+.Button--watch:before {
+  height: 8px;
+  border-radius: 0 0 3px 3px;
+}
+
+.Button--watch:after, .Button--watch:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+.Button--watch:after {
+  height: 4px;
+  bottom: 4px;
+  border-radius: 0 0 4px 4px;
+}
+
+.Button--watch:after, .Button--watch:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+
+.Price__postage {
+  margin: 15px 0 2px;
+}
+
+.Price__postageTitle {
+  font-weight: 700;
+}
+
+.Price__postageValue {
+  margin-left: 12px;
+}
+
+.Price__postageValue--bold {
+  font-weight: 700;
+  margin: 0;
+}
+
+.ProductInformation__item {
+  /* border-left: 1px solid #d3d2cc; */
+  /* border-right: 1px solid #d3d2cc; */
+  /* border-bottom: 1px solid #d3d2cc; */
+  overflow: hidden;
+  width: 100%;
+}
+
+.Seller {
+  /* position: relative; */
+  padding: 15px 15px 0 15px;
+  *zoom: 1;
+}
+
+.Seller__title {
+  margin-bottom: 10px;
+  letter-spacing: -.4em;
+}
+
+.Seller__titleText {
+  display: inline-block;
+  margin-right: 5px;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+.Seller__subCard {
+  margin-bottom: 10px;
+}
+
+.Seller__rating {
+  margin-top: 10px;
+  line-height: 1.1;
+}
+
+.Seller__subCard.cvr273 .Seller__ratingTitle {
+  width: 150px;
+  font-size: 13px;
+}
+
+.Seller__subCard.cvr273 .Seller__ratingCount {
+  width: 150px;
+  font-size: 13px;
+  border-left: 1px solid #ccc;
+  text-align: left;
+}
+
+.Seller__subCard.cvr273 .Seller__ratingGood {
+  margin-left: 10px;
+}
+
+.Seller__otherItem {
+  margin-top: 10px;
+}
+
+.Seller__other {
+  display: inline-block;
+  color: #ff0000;
+}
+
+.Seller__area {
+  margin-top: 10px;
+  line-height: 1.1;
+}
+
+.Seller__note {
+  padding-bottom: 5px;
+  margin-top: 10px;
+}
+
+.Seller__noteItem {
+  margin-bottom: 10px;
+}
+
+.Seller__alertButton {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  width: auto;
+  height: 34px;
+  margin: 0 auto;
+  border: 1px solid #9f9e98;
+  color: #33322f;
+  background-color: #f6f6f1;
+  line-height: 34px;
+  text-align: center;
+  border-radius: 4px;
+  font-family: inherit;
+  vertical-align: bottom;
+  cursor: pointer;
+  -webkit-transition: opacity .1s ease-out;
+  -moz-transition: opacity .1s ease-out;
+  transition: opacity .1s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  padding-left: 10px;
+  padding-right: 20px;
+  /* background-image: url(https://s.yimg.jp/images/icon/f/bsc/1.0.0/bell16.png); */
+  background-repeat: no-repeat;
+  background-position: 15px 7px;
+  font-size: 81.25%;
+}
+
+.Seller__alertButton > i {
+  color: darkgoldenrod;
+}
+
+.Seller__alertButton:before {
+  height: 8px;
+  border-radius: 0 0 3px 3px;
+  background-color: #e2e1da;
+}
+
+.Seller__alertButton:after {
+  height: 4px;
+  bottom: 4px;
+  border-radius: 0 0 4px 4px;
+  background-color: #f6f6f1;
+}
+
+.Seller__noteItem {
+  margin-bottom: 10px;
+}
+
+.Seller__questionButton {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  height: 34px;
+  margin: 0 auto;
+  border: 1px solid #9f9e98;
+  color: #33322f;
+  background-color: #f6f6f1;
+  line-height: 34px;
+  text-align: center;
+  border-radius: 4px;
+  font-family: inherit;
+  vertical-align: bottom;
+  cursor: pointer;
+  -webkit-transition: opacity .1s ease-out;
+  -moz-transition: opacity .1s ease-out;
+  transition: opacity .1s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  font-size: 81.25%;
+}
+
+.ProductImage {
+  visibility: hidden;
+  position: relative;
+  margin-bottom: 15px;
+  padding-bottom: 1px;
+  overflow: hidden;
+  *width: 100%;
+}
+
+.ProductImage__body {
+  padding-left: 50%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ProductImage__images {
+  position: relative;
+  width: 6160px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  left: -300px;
+  text-align: center;
+}
+
+.Seller__name {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  max-width: 213px;
+  *width: 213px;
+  margin-right: 8px;
+  word-break: break-all;
+  vertical-align: middle;
+  line-height: 1.125;
+  margin-bottom: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlideImage {
+  text-align: center;
+}
+
+.mySlide {
+  display: none;
+}
+
+.mySlides-show {
+  display: block;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white !important;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+/* Add a transparency effect for thumnbail images */
+.mySlideImage-active {
+  opacity: 0.6;
+}
+
+.active,
+.mySlideImage-active:hover {
+  opacity: 1;
+}
+.prev,
+.next {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+.product_info{
+  margin-top: 10px;
+}
+.product_info a{
+  font-weight: bold;
+}
+.detail-product-right {
+  border: 1px solid #d3d2cc;
+  padding: 14px;
+}
+#nav_main {
+  display: none;
+}
+#nav_main {
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  border-top: solid 1px #e6e6e6;
+  z-index: 130;
+}
+.nav_main_lst {
+  display: flex;
+}
+.nav_main_item {
+  width: 33.33%;
+  min-height: 64px;
+}
+.nav_main_url {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 500;
+  height: 100%;
+}
+.nav_main_url i {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #333;}
+@media (min-width: 576px) {
+  .img-fluid {
+    height: 400px;
+  }
+}
+@media (max-width: 576px) {
+  #nav_main {
+    display: block;
+  }
+  #btn-shop-cart{
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  #btn-shop-cart{
+    display: block;
+  }
+}

@@ -1,0 +1,50 @@
+<div class="Subhead">
+  <h2 id="public-profile-heading" class="Subhead-heading">Thông tin chi tiết</h2>
+</div>
+<form #accountForm="ngForm">
+  <div class="form-group">
+    <label>Họ và tên</label>
+    <input type="text" class="form-control col-md-6" name="fullName" [(ngModel)]="user.fullName" #fullName="ngModel" required>
+    <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">
+      <div *ngIf="fullName.errors.required">
+        <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập họ tên.</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" class="form-control col-md-6" #email="ngModel" [(ngModel)]="user.email" name="email" required [pattern]="emailRegex" required>
+    <div *ngIf="email.errors?.pattern">
+      <label class="invalid">Email nhập không đúng.</label>
+    </div>
+    <div [ngClass]="existEmail?'show':'hide'" class="invalid">
+      Email đã đăng ký.
+    </div>
+    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+      <div *ngIf="email.errors.required">
+        <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập email.</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Ngày sinh</label>
+    <input type="text" class="form-control col-md-6" name="birthday" bsDatepicker [(bsValue)]="birthDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+  </div>
+  <div class="form-group row">
+    <label class="col-auto">Giới tính</label>
+    <div class="col">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" [checked]='user.sex' (click)="checkedSex()">
+        <label class="custom-control-label" for="customRadioInline1">Nam</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" [checked]='!user.sex'>
+        <label class="custom-control-label" for="customRadioInline2" (click)="checkedSex()">Nữ</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" [disabled]="!accountForm.form.valid" (click)="updateAccount()">Cập nhật tài khoản</button>
+  </div>
+</form>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

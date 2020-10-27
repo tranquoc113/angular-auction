@@ -1,0 +1,11 @@
+.card {
+  border: white !important;
+}
+@media (max-width: 575.98px) {
+  .account-mobile{
+    margin-top: 10px;
+  }
+  .container-mobile{
+    padding: 0 0;
+  }
+}

@@ -1,0 +1,389 @@
+<nav id="nav_main">
+  <ul class="nav_main_lst">
+    <li class="nav_main_item"><a title="Giỏ hàng" class="nav_main_url" href="javascript:;" (click)="viewCard()"> <i
+      class="fa fa-shopping-cart"></i> <span>Giỏ hàng</span> </a></li>
+    <li class="nav_main_item"><a title="Yêu thích" class="nav_main_url" href="javascript:;"> <i
+      class="fa fa-heart"></i> <span>Yêu thích</span> </a></li>
+    <li class="nav_main_item"><a class="nav_main_url" href="javascript:;" (click)="openModal()"> <i class="fa fa-gavel"></i> <span>Đấu giá</span>
+    </a></li>
+  </ul>
+</nav>
+<nav aria-label="breadcrumb" class="nav-mobile">
+  <ol class="breadcrumb">
+    <div class="container-fluid container-custom-nav">
+      <li class="breadcrumb-item"><a href="javascript:;" routerLink=""><i class="fa fa-home"></i>  Trang chủ</a></li>
+      <li class="breadcrumb-item data-list-hover" aria-current="page" *ngFor="let item of categoryPathsHover; let i = index">
+        <a class="red-custom" href="javascript:;" routerLink="/yahoo-auction" *ngIf="item.key=='0'">YahooAuction</a>
+        <a class="red-custom" href="javascript:;" *ngIf="i+1!==categoryPathsHover.length && item.key!='0'" (click)="openLink(item.key)">{{item.key | translate}}</a>
+        <span class="active" *ngIf="i+1===categoryPathsHover.length">{{item.key | translate}}</span>
+        <ng-container>
+          <ul [ngClass]="{'hide': i+1===categoryPathsHover.length}">
+            <li *ngFor="let itemchild of item.child" class="nav-item-mobile">
+              <a href="javascript:;" (click)="openLink(itemchild.CategoryId)">{{itemchild.CategoryId | translate}}</a>
+            </li>
+          </ul>
+        </ng-container>
+      </li>
+    </div>
+  </ol>
+</nav>
+<div class="container-fluid page-home">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="container" *ngIf="images.length<=0">
+          <div class="mySlideImage">
+            <img src="../../../../assets/img/no-img.jfif"
+                 class="img-fluid img-thumbnail">
+          </div>
+        </div>
+        <div class="container" *ngIf="images.length>0">
+          <!-- Full-width images with number text -->
+          <div class="mySlideImage" *ngFor="let item of images; let i= index"
+               [ngClass]="statusSlides===i+1? 'mySlides-show':'mySlide'">
+            <div class="numbertext">{{i + 1}} / {{images.length}}</div>
+            <img src="{{item}}" class="img-fluid img-thumbnail">
+          </div>
+          <!-- Next and previous buttons -->
+          <a [ngClass]="statusSlides > 1? 'show': 'hide' " class="prev" (click)="plusSlides(-1)">&#10094;</a>
+          <a [ngClass]="statusSlides < images.length? 'show': 'hide' " class="next" (click)="plusSlides(1)">&#10095;</a>
+          <!-- Thumbnail images -->
+          <div class="row m-0" *ngIf="images.length>1">
+            <div class="column" *ngFor="let item of images; let i= index">
+              <img class="mySlideImage-active cursor" src="{{item}}" (click)="showSlides(i+1)"
+                   [ngClass]="statusSlides==i+1?'active':''">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <div class="detail-product">
+          <div class="detail-product-top">
+            <h6 class="title-product">{{product.Title}}</h6>
+          </div>
+          <div class="row">
+            <div class="col border-right">
+              <p class="text-center">Số lượt đấu giá</p>
+              <p class="text-center font-weight-bold quanty-auction">{{product.Bids}}</p>
+            </div>
+            <div class="col">
+              <p class="text-center">Thời gian còn lại</p>
+              <p class="text-center font-weight-bold quanty-auction" *ngIf="_diff>0">
+                <span>{{_days}}d-</span> {{_hours}}h
+                <span>{{_minutes}}'</span> {{_seconds}}s
+              </p>
+              <p class="text-center font-weight-bold quanty-auction" *ngIf="_diff<0">
+                <span >Hết thời gian đấu giá</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p class="Price__value text-center font-weight-bold">{{product.Price| number}} Yên
+                <span class="Price__tax">(Thuế {{product.TaxRate}} yên )</span>
+              </p>
+            </div>
+          </div>
+
+
+          <div class="row mt-2 ml-2 mr-2" id="btn-shop-cart">
+            <div class="col">
+              <button type="button" class="btn btn-warning btn-lg w-100" (click)="openModal()" [disabled]="_diff<0"><i
+                class="fa fa-gavel"></i> Đấu giá
+              </button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-danger btn-lg w-100"><i
+                class="fa fa-shopping-cart"></i> Mua ngay
+              </button>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col">
+              <p class="font-weight-bold pt-3 pl-3" style="border-top: 1px solid #d3d2cc">Thông tin người bán</p>
+              <div class="row saler-infor">
+                <div class="col-md-4 col-6"><i class="fa fa-home"></i>&nbsp; {{product.Seller.Id}}</div>
+                <div class="col-md-4 col-6"><i class="fa fa-eye"></i>&nbsp;
+                  <a href="https://auctions.yahoo.co.jp/seller/{{product.Seller.Id}}" class="Seller__other"> Xem shop</a>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Đánh giá tốt:
+                    <span class="font-weight-bold">{{_rankingShop.TotalGoodRating | number}}</span>
+                  </p>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Chưa tốt:
+                    <span class="font-weight-bold">{{_rankingShop.TotalBadRating | number}}</span>
+                  </p>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Tổng tuần tốt :
+                    <span class="font-weight-bold">{{_rankingShop.WeekGoodRating| number}}</span>
+                  </p>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Tổng tuần chưa tốt :
+                    <span class="font-weight-bold">{{_rankingShop.WeekBadRating| number}}</span>
+                  </p>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Tổng tháng tốt :
+                    <span class="font-weight-bold">{{_rankingShop.MonthGoodRating| number}}</span>
+                  </p>
+                </div>
+                <div class="col-md-4 col-6">
+                  <p>Tổng tháng chưa tốt :
+                    <span class="font-weight-bold">{{_rankingShop.MonthBadRating| number}}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="row saler-infor">
+                <div class="col-md-5 col-6">
+                  <a href="javascript:;" (click)="openTranslateRanking()" class="Seller__alertButton">
+                    <i class="fa fa-star"></i> Danh sách đánh giá</a>
+                </div>
+                <div class="col-md-3 p-0 col-6">
+                  <a href="https://auctions.yahoo.co.jp/jp/show/qanda?aID=m357447874" class="Seller__questionButton">
+                    <i class="fa fa-user" aria-hidden="true"></i> Hỏi người bán</a>
+                </div>
+                <div class="col-md-4 col history pr-0">
+                  <a href="javascript:;" data-toggle="modal" data-target=".bd-example-modal-lg"
+                     class="Seller__alertButton" (click)="historyBid(product.AuctionID)">
+                    <i class="fa fa-clock-o"></i> Lịch sử đấu giá</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <table class="table table-striped table-sm">
+            <tbody>
+            <tr>
+              <td>Trạng thái:</td>
+              <td>{{product.Status == "open" ? "Đang mở" : "Đã đóng"}}</td>
+            </tr>
+            <tr>
+              <td>Số lượng:</td>
+              <td>{{product.Quantity | number}}</td>
+            </tr>
+            <tr>
+              <td>Thời gian bắt đầu:</td>
+              <td>{{product.StartTime | date : 'dd/MM/yyyy HH:mm'}}</td>
+            </tr>
+            <tr>
+              <td>Thời gian kết thúc:</td>
+              <td>{{product.EndTime | date : 'dd/MM/yyyy HH:mm'}}</td>
+            </tr>
+            <tr>
+              <td>Giá khởi điểm:</td>
+              <td>{{product.Initprice | number}} yên</td>
+            </tr>
+            <tr>
+              <td>Auction ID:</td>
+              <td>{{product.AuctionID}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 mt-3" *ngIf="product.Description !='' ">
+    <div class="card">
+      <div class="card-header text-warning" style="font-size: 20px;">
+        Mô tả sản phẩm
+        <div class="float-right"><a href="javascript:;" (click)="openTranslateDes()"><i class="fa fa-language"
+                                                                                        aria-hidden="true"></i> Dịch</a>
+        </div>
+      </div>
+      <div [innerHTML]="product.Description" id="table-des"></div>
+    </div>
+  </div>
+
+  <div class="col-md-12 mt-3">
+    <div class="row relatively-product">
+      <div class="underlinlie"></div>
+      <div class="float-left">
+        <h3><a href="javascript:;"> Sản phẩm cùng loại</a></h3>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-3 col-6 product_item" *ngFor="let product of products">
+        <div class="product_body">
+          <a class="product_thumb" href="javascript:;" [routerLink]="['../', product.AuctionID]">
+            <img src="{{product.Image}}">
+          </a>
+          <div class="product_info">
+            <h3 class="product_name"><a href="javascript:;" title="{{product.Title}}"
+                                        [routerLink]="['../', product.AuctionID]"> {{product.Title}}
+            </a></h3>
+            <div class="product_info_top">
+                    <span class="count_down">{{product.EndTime | date: 'dd-MM-yyyy'}}
+                                            </span>
+              <span class="product_source_web"><i
+                class="fa fa-gavel"></i>
+                {{product.Bids}}
+                lượt đấu</span>
+            </div>
+            <div class="product_info_row">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="product_price"><strong class="font-weight-bold">
+                  {{product.CurrentPrice | number}} Yên
+                  <br>
+                </strong>
+                </div>
+                <a class="button_primary" href="javascript:;"
+                   (click)="openModalAuction(product)"><i
+                  class="fa fa-gavel"></i>
+                  Đấu giá</a>
+              </div>
+              <p>* Chưa gồm phí phát sinh</p>
+            </div>
+
+            <div class="product_showmore">
+              <div class="product_seller">
+                <i class="fa fa-home"></i> Người bán: <a title="{{product.Seller.Id}}" class="font-weight-bold"
+                                                         href="{{product.ItemListUrl}}">{{product.Seller.Id}}</a>
+              </div>
+              <div class="text-center mt-2"><a class="button_primary" href="javascript:;"
+                                               data-toggle="modal" data-target=".bd-example-modal-lg"
+                                               (click)="historyBid(product.AuctionID)"><i
+                class="fa fa-clock-o"></i>
+                Xem lịch sử đấu giá nhanh</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../../../../assets/img/yahoo-auction/yahoo-auction.jpg" style="width: 15%">
+        <h5 class="modal-title" id="exampleModalScrollableTitle" style="line-height: 3.0;"> Lịch sử đấu giá</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Thời gian</th>
+            <th scope="col">Tên đấu giá</th>
+            <th scope="col">Tình trạng</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Giá</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="_historyBid.length>0">
+          <tr *ngFor="let item of _historyBid; let i=index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{item.Date | date: 'dd/MM/yyy HH:mm'}}</td>
+            <td>{{item.Bidder}}</td>
+            <td>{{item.IsAutomatically == "true" ? 'Tự động đấu giá' : 'Tự đấu giá'}}</td>
+            <td class="font-weight-bold text-center">{{item.Quantity ? item.Quantity : 0}}</td>
+            <td class="font-weight-bold">{{item.Price | number}} Yên</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Ranking-->
+<div class="modal fade bd-example-modal-lg-rangking" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../../../../assets/img/yahoo-auction/yahoo-auction.jpg" style="width: 15%">
+        <h5 class="modal-title" style="line-height: 3.0;"> Danh sách đánh giá</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" width="24%">Tên đánh giá</th>
+            <th scope="col">Nội dung</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of _rankingShop.Result; let i=index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{item.Author.Id}}</td>
+            <td>{{item.RatingField.Comment}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../../../../assets/img/yahoo-auction/yahoo-auction.jpg" style="width: 15%">
+        <h4 class="modal-title"> Đấu giá</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-auto col-form-label">Giá</label>
+          <div class="col">
+            <input appNumberPaste type="text" class="form-control" name="price" [ngModel]="price | numberPipe" (ngModelChange)="price=$event" (keyup)="changePrice()">
+            <label class="invalid" *ngIf="priceAuctionErro"> <i class="fa fa-exclamation-triangle"></i> Phải cao hơn giá hiện tại.</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" (click)="auction(auctionID)" [disabled]="priceAuctionErro">Đấu giá</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="childModal.hide()">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #childModalDetailFinanceUser="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-sm">
+    <div id="container" class="finance-user-modal">
+      <div id="error-box">
+        <div class="face">
+          <div class="eye"></div>
+          <div class="eye right"></div>
+          <div class="mouth sad"></div>
+        </div>
+        <div class="shadow move"></div>
+        <div class="message"><h1 class="alert">Lỗi!</h1><p>Tài chính của bạn không đủ để tham gia.</p></div>
+        <button class="button-box"><h1 class="red">Thử lại</h1></button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

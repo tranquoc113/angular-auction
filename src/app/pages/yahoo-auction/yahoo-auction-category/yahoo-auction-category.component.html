@@ -1,0 +1,16 @@
+<div class="menu-category">
+  <accordion [closeOthers]="true">
+    <accordion-group *ngFor="let item of category_Parent"
+                     (isOpenChange)="loadMenuCategoryChild(item.CategoryId,$event)">
+      <a  accordion-heading>
+        <div class="p-custom-category text-cut item-category-custom"><a href="javascript:;" title="{{item.CategoryId | translate}}" (click)="openLink(item.CategoryId)">{{item.CategoryId | translate}}</a></div>
+        <span class="p-custom-category category-down-custom "><i class="fa fa-angle-down"></i></span>
+      </a>
+      <ul>
+        <li *ngFor="let child_item of category_Child">
+          <a class="text-cut" href="javascript:;" (click)="openParent(child_item.CategoryId)" title="{{child_item.CategoryId | translate}}">{{child_item.CategoryId | translate}}</a>
+        </li>
+      </ul>
+    </accordion-group>
+  </accordion>
+</div>

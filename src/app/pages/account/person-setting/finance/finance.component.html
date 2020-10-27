@@ -1,0 +1,112 @@
+<div class="Subhead">
+  <h2 id="public-profile-heading" class="Subhead-heading">Tài chính của tôi <span>({{balance}} yên)</span></h2>
+</div>
+<div class="card">
+  <div class="card-header">
+    <span>Tìm kiếm</span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Từ khóa ̣</label>
+          <div class="col-md-10">
+            <input type="text" class="form-control" name="txtSearch" [(ngModel)]="keySearch" placeholder="Tìm theo mã đơn hàng">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Trạng thái</label>
+          <div class="col-md-8">
+            <select class="form-control" [(ngModel)]="status" name="statusFinance">
+              <option selected value="">Tất cả́</option>
+              <option value="BUY">Thanh toán</option>
+              <option value="ADD">Thêm tiền</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Sắp xếp</label>
+          <div class="col-md-8">
+            <select class="form-control" [(ngModel)]="sortType" name="sortType">
+              <option value="NEW">Mới nhất</option>
+              <option value="OLD">Cũ nhất</option>
+              <option value="PRICEDES">Tiền cao nhất</option>
+              <option value="PRICEASC">Tiền thấp nhất</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Từ ngày</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   [(ngModel)]="fromDay"
+                   bsDatepicker
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   name="fromDate">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Đến ngày</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   [(ngModel)]="toDay"
+                   bsDatepicker
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   name="fromDate">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" (click)="searchFinance()"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+</div>
+<table class="table table-borderless" style="table-layout: fixed">
+  <thead>
+  <tr>
+    <th id="stt-finance">STT</th>
+    <th>Vào lúc</th>
+    <th>Trạng thái</th>
+    <th class="text-center">Tài chính (yên)</th>
+    <th>Ghi chú</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of listFinace; let i = index">
+    <td>{{i + 1}}</td>
+    <td class="font-weight-bold">{{item.dateCreate | date: 'dd/MM/yyyy H:mm:ss'}}</td>
+    <td>
+      <span class="badge badge-success" *ngIf="item.financeStatusID=='BUY'">Mua hàng</span>
+      <span class="badge badge-primary" *ngIf="item.financeStatusID!='BUY'">Thêm mới</span>
+    </td>
+    <td class="font-weight-bold text-center">{{item.moneyInput | number}}</td>
+    <td>
+      <span *ngIf="item.financeStatusID=='BUY'">Đơn hàng <a href="javascript:;" class="text-info" (click)="openOrderDetail(item.orderID)">#{{item.orderID}}</a></span>
+      <span *ngIf="item.financeStatusID!=='BUY'">Thêm bởi (admin)</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-md-12 d-flex justify-content-end">
+    <pagination [totalItems]="toTal" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;" (pageChanged)="appPageChange($event)" [maxSize]="5" [itemsPerPage]="itemsPerPage">
+    </pagination>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>
+

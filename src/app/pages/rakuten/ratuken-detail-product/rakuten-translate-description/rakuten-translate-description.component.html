@@ -1,0 +1,126 @@
+<header class="header">
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
+          <ul class="topbar_left hidden-sm hidden-xs">
+            <li><a class="welcome_text">Chào mừng bạn đến với Cocomart !</a></li>
+            <li><a>Mở cửa: 8h00 - 22h00, thứ 2 - CN hàng tuần</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-6 col-md-5 col-sm-12 d-list col-xs-12 text-right topbar_right">
+          <div class="list-inline text-center float-right">
+            <ul>
+              <li class="login_content">
+                <a class="hidden-lg click_account"><i class="fa fa-user" aria-hidden="true"></i> Tài khoản</a>
+                <ul class="ul_account">
+                  <li><a href="javascript:;"><i
+                    class="fa fa-user"></i> Đăng nhập</a></li>
+
+                  <li><a href="javascript:;"><i
+                    class="fa fa-user"></i> Đăng ký</a></li>
+                </ul>
+              </li>
+              <li class="hidden-xs">
+                <a href="javascript:;" title="Hệ thống cửa hàng" class="account_a">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i> Hệ thống cửa hàng
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mid-header w-100 f-left">
+    <div class="container">
+      <div class="">
+        <div class="content_header">
+          <div class="header-main row">
+            <div class="menu-bar-h nav-mobile-button hidden-md hidden-lg">
+              <a href="javascript:;">
+<!--                <img src="http://sieuthibanle.langsonweb.com/wp-content/themes/vpw_theme/images/i_menubar.png" alt="menu bar">-->
+              </a>
+            </div>
+            <div class="col-lg-3 col-md-3">
+              <div class="logo">
+                <a href="javascript:;" class="logo-wrapper " routerLink="">
+<!--                  <img src="http://sieuthibanle.langsonweb.com/wp-content/uploads/2018/12/logo.png" alt="logo ">-->
+                </a>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="header-right">
+                <div class="hotline_dathang hidden-sm">
+                  <div class="icon_hotline">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                  </div>
+                  <div class="content_hotline">
+                    <a href="tel:0986.989.626">0986.989.626</a>
+                    <span>Hotline đặt hàng</span>
+                  </div>
+                </div>
+                <div class="top-cart-contain float-right">
+                  <div class="mini-cart text-xs-center">
+                    <div class="heading-cart cart_header">
+                      <a href="javascript:;" title="Giỏ hàng">
+                        <div class="icon_hotline">
+                          <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        </div>
+                      </a>
+                      <div class="content_cart_header">
+                        <a class="bg_cart" href="javascript:;" title="Giỏ hàng">
+                          (<span>0</span>) Sản phẩm
+                          <span class="text-giohang">Giỏ hàng</span>
+                        </a>
+                      </div>
+
+                    </div>
+                    <div class="top-cart-content">
+                      <ul>
+                        <div>
+                          <p>Chưa có sản phẩm trong giỏ hàng.</p>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="top-cart-contain float-right hidden">
+                  <div class="mini-cart text-xs-center">
+                    <div class="heading-cart">
+                      <a class="bg_cart" href="javascript:;" title="Giỏ hàng">
+                        <i class="ion-android-cart"></i>
+                        <span class="count_item count_item_pr"></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div style="margin-bottom: 100px;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="margin-top: 10px">
+          <div class="card-header text-warning" style="font-size: 20px;">
+            {{rakuten.itemName}}
+            <div id="google_translate_element" class="float-right"></div>
+          </div>
+          <div class="card-body">
+            <p [innerHTML]="rakuten.itemCaption"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

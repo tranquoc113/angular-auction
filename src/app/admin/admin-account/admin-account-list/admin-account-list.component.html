@@ -1,0 +1,82 @@
+<section class="content-layout">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <div class="container-fluid container-custom-nav">
+        <li class="breadcrumb-item"><a href="javascript:;" routerLink=""><i class="fa fa-home"></i>  Trang chủ</a></li>
+      </div>
+    </ol>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered ">
+          <thead>
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tài khoản</th>
+            <th scope="col">Chức danh</th>
+            <th scope="col">Email</th>
+            <th scope="col">Ngày đăng ký </th>
+            <th scope="col">Hoạt động</th>
+            <th scope="col">Chức năng</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let user of userList; let i = index">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.des}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.date | date: 'dd-MM-yyyy'}}</td>
+            <td>
+              <div class="custom-control custom-checkbox text-center">
+                <input type="checkbox" class="custom-control-input" id="{{user.id}}" name="active" [(ngModel)]="user.active" (change)="activeChange(user)">
+                <label class="custom-control-label" for="{{user.id}}"></label>
+              </div>
+            </td>
+            <td>
+              <a class="fts-100 badge badge-primary" [routerLink]="['../detail', user.userID]"><i class="fa fa-edit"></i></a>
+              <a class="ml-1 fts-100 badge badge-danger" style="color: white" (click)="openModal(template, user)"><i class="fa fa-trash" ></i></a>
+            </td>
+          </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-end">
+        <pagination [totalItems]="userList.length" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;"
+                    lastText="&raquo;" (pageChanged)="appPageChange($event)" [maxSize]="5" [itemsPerPage]="itemsPerPage">
+        </pagination>
+      </div>
+    </div>
+
+  </div>
+</section>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Có muốn xóa: {{user.fullName}}?</p>
+    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="confirmDelete(user.id)"><i
+      class="fa fa-check"></i> Yes</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()">
+      <i class="fa fa-close"></i> No</button>
+  </div>
+</ng-template>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

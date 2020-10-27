@@ -1,0 +1,13 @@
+.icon-event .badge{
+  font-size: initial;
+}
+.icon-event .badge i{
+  color: white;
+}
+.form-update .badge{
+   padding: 5px;
+ }
+.form-update .badge i{
+  font-size: 20px;
+  color: white;
+}

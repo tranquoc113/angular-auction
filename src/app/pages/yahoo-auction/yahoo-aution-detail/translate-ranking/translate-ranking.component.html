@@ -1,0 +1,87 @@
+<header class="header">
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
+          <ul class="topbar_left hidden-sm hidden-xs">
+            <li><a class="welcome_text">Chào mừng bạn đến với Saiko !</a></li>
+            <li><a>Mở cửa: 8h00 - 22h00, thứ 2 - CN hàng tuần</a></li>
+          </ul>
+        </div>
+
+<!--        <div class="col-lg-6 col-md-5 col-sm-12 d-list col-xs-12 text-right topbar_right">-->
+<!--          <div class="list-inline text-center float-right">-->
+<!--            <ul>-->
+<!--              <li class="login_content">-->
+<!--                <a class="hidden-lg click_account"><i class="fa fa-user" aria-hidden="true"></i> Tài khoản</a>-->
+<!--                <ul class="ul_account">-->
+<!--                  <li><a href="javascript:;"><i-->
+<!--                    class="fa fa-user"></i> Đăng nhập</a></li>-->
+
+<!--                  <li><a href="javascript:;"><i-->
+<!--                    class="fa fa-user"></i> Đăng ký</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--              <li class="hidden-xs">-->
+<!--                <a href="javascript:;" title="Hệ thống cửa hàng" class="account_a">-->
+<!--                  <i class="fa fa-map-marker" aria-hidden="true"></i> Hệ thống cửa hàng-->
+<!--                </a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </div>
+  <div class="mid-header w-100 f-left">
+    <div class="container">
+      <div class="">
+        <div class="content_header">
+          <div class="header-main row">
+            <div class="col-lg-3 col-md-3">
+              <div class="logo">
+                <a href="javascript:;" class="logo-wrapper " routerLink="">
+                  <img src="../../../../assets/img/logo-tomoni.png" alt="logo ">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div style="margin-bottom: 100px;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card" style="margin-top: 10px">
+              <div class="card-header text-warning" style="font-size: 20px;">
+                Danh sách đánh giá
+                <div id="google_translate_element" class="float-right"></div>
+              </div>
+              <div class="card-body p-0">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" width="24%">Tên đánh giá</th>
+                    <th scope="col">Nội dung</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of ranking; let i=index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{item.Author.Id}}</td>
+                    <td>{{item.RatingField.Comment}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+

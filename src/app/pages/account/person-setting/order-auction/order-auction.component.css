@@ -1,0 +1,29 @@
+.Subhead {
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.Subhead-heading {
+  font-size: 24px;
+  font-weight: 400;
+  flex: 1 1 auto;
+}
+.order-product{
+  width: 40%;
+}
+@media (max-width: 575.98px) {
+  .order-product{
+    width: 0px;
+  }
+  .table{
+    font-size: 10px;
+  }
+  .table td {
+    padding-left: 0;
+  }
+  .btn-group-sm>.btn, .btn-sm {
+    padding: 0.2rem .2rem;
+    font-size: 0.6rem;
+  }
+}

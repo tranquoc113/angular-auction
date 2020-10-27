@@ -1,0 +1,121 @@
+<div class="Subhead">
+  <h2 id="public-profile-heading" class="Subhead-heading">Đơn hàng của tôi <span>({{toTal}})</span></h2>
+  <span class="badge badge-danger mr-2">Chờ xác nhận ({{countStatusOrder.WAITING}})</span>
+  <span class="badge badge-info mr-2">Tiếp nhận ({{countStatusOrder.RECEIVE}})</span>
+  <span class="badge badge-warning mr-2">Đang giao ({{countStatusOrder.PROCESS}})</span>
+  <span class="badge badge-success">Đã giao ({{countStatusOrder.SUCCESS}})</span>
+</div>
+<div class="card">
+  <div class="card-header">
+    <span>Tìm kiếm</span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Trạng thái</label>
+          <div class="col-md-8">
+            <select class="form-control" [(ngModel)]="statusOrder" name="statusOrder">
+              <option selected value="">Tất cả́</option>
+              <option value="WAITING">Chờ đặt hàng</option>
+              <option value="RECEIVE">Tiếp nhận</option>
+              <option value="PROCESS">Đang giao</option>
+              <option value="SUCCESS">Đã giao</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Sắp xếp</label>
+          <div class="col-md-8">
+            <select class="form-control" [(ngModel)]="sortType" name="sortType">
+              <option value="NEW">Mới nhất</option>
+              <option value="OLD">Cũ nhất</option>
+              <option value="PRICEDES">Giá cao nhất</option>
+              <option value="PRICEASC">Giá thấp nhất</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Từ ngày</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   [(ngModel)]="fromDay"
+                   bsDatepicker
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   name="fromDate">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Đến ngày</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   [(ngModel)]="toDay"
+                   bsDatepicker
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   name="fromDate">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Từ khóa ̣</label>
+          <div class="col-md-10">
+            <input type="text" class="form-control" name="txtSearch" [(ngModel)]="keySearch">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" (click)="searchOrder()"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+</div>
+<table class="table table-borderless" style="table-layout: fixed">
+  <thead>
+  <tr>
+    <th>Mã đơn hàng</th>
+    <th>Ngày lên đơn</th>
+    <th id="order-product">Sản phẩm</th>
+    <th>Tổng tiền(yên)</th>
+    <th>Trạng thái</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of orderList">
+    <th scope="row"><a href="javascript:;">{{item.id}}</a>
+      <button type="button" class="btn btn-success btn-sm d-block" *ngIf="item.orderStatusID=='WAITING'"
+              (click)="viewWaiting(item)">Đặt hàng
+      </button>
+      <button type="button" class="btn btn-info btn-sm d-block" *ngIf="item.orderStatusID!='WAITING'" (click)="viewDetailOrder(item.id)">Chi tiết</button>
+    </th>
+    <td><span>{{item.date | date: 'dd/MM/yyyy'}}</span></td>
+    <td style="width: 40%"><p style="word-wrap: break-word">{{item.name}}</p></td>
+    <td class="text-center"><span class="font-weight-bold">{{item.priceSum | number}}</span></td>
+    <td>
+      <span class="badge badge-danger" *ngIf="item.orderStatusID=='WAITING'">Đang chờ xử lý</span>
+      <span class="badge badge-info" *ngIf="item.orderStatusID=='RECEIVE'">Đang tiếp nhận</span>
+      <span class="badge badge-success" *ngIf="item.orderStatusID=='SUCCESS'">Đã giao</span>
+      <span class="badge badge-warning" *ngIf="item.orderStatusID=='PROCESS'">Đang giao</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-md-12 d-flex justify-content-end">
+    <pagination [totalItems]="toTal" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;" (pageChanged)="appPageChange($event)" [maxSize]="5" [itemsPerPage]="itemsPerPage">
+    </pagination>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>
+

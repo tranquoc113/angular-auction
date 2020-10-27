@@ -1,0 +1,33 @@
+.Subhead {
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.Subhead-heading {
+  font-size: 24px;
+  font-weight: 400;
+  flex: 1 1 auto;
+}
+
+.cart-img {
+  width: 70px;
+}
+
+.card-history-auction{
+  display: block;
+  color: red !important;
+  font-size: 10px;
+  margin-top: 5px
+}
+@media (max-width: 575.98px) {
+  .img-mobile{
+    display: none;
+  }
+  .table{
+    font-size: 10px;
+  }
+  .table td {
+    padding-left: 0;
+  }
+}

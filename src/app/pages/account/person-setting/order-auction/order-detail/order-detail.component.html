@@ -1,0 +1,58 @@
+<div *ngIf="orderDetail">
+  <div class="Subhead">
+    <h2 class="Subhead-heading">Chi tiết đơn hàng <span>#{{orderDetail.id}}</span>
+      <span *ngIf="orderDetail.orderStatusID == 'SUCCESS'"> - Giao hàng thành công</span>
+      <span *ngIf="orderDetail.orderStatusID == 'PROCESS'"> - Đang giao</span>
+    </h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{orderDetail.personName}}</h5>
+      <p class="card-text">Địa chỉ: {{orderDetail.nameAdress}}
+      </p>
+      <p class="card-text">Điện thoại: {{orderDetail.phone}}</p>
+      <!--    <p class="card-text" *ngIf="orderDetail.orderStatusID == 'SUCCESS'">-->
+      <!--      <small class="text-muted">Đã giao ngày: {{orderDetail.date | date: 'dd/MM/yyyy'}}</small>-->
+      <!--    </p>-->
+    </div>
+  </div>
+  <table class="table" style="table-layout: fixed">
+    <thead>
+    <tr>
+      <th width="60%">Sản phẩm</th>
+      <th>Ngày lên đơn</th>
+      <th>Tạm tính(yên)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td width="60%">
+        <div class="row">
+          <div class="col-md-3"><img src="{{orderDetail.img}}"></div>
+          <div class="col-md-9">
+            <div>
+              <p>{{orderDetail.name}}</p>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td><p class="font-weight-bold">{{orderDetail.date | date: 'dd/MM/yyyy'}}</p>
+      </td>
+      <td><span class="font-weight-bold">{{orderDetail.price | number}}</span></td>
+    </tr>
+    <tr>
+      <td class="text-right" colspan="2">
+        <p>Tạm tính(yên):</p>
+        <p>Phí vận chuyển(yên):</p>
+        <p>Tổng cộng(yên):</p>
+      </td>
+      <td>
+        <p class="font-weight-bold">{{orderDetail.price | number}}</p>
+        <p class="font-weight-bold">{{orderDetail.priceSum-orderDetail.price}}</p>
+        <p class="font-weight-bold">{{orderDetail.priceSum | number}}</p>
+      </td>
+    </tbody>
+  </table>
+
+
+</div>

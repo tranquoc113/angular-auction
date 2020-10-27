@@ -1,0 +1,78 @@
+<div class="container mt-3 container-mobile">
+  <div class="col-md-12">
+    <div class="alert alert-success" role="alert" *ngIf="checkSuccess">
+      {{messageSuccess}}!
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="checkError">
+      {{messageErro}}!
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="col-md-3 ml-0">
+          <div class="card-header">
+            Thiết lập cá nhân
+          </div>
+          <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===1}" id="list-home-list"
+               data-toggle="list" href="#list-home" role="tab" aria-controls="home" (click)="itemChange(1)">Chung</a>
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===2}" id="list-profile-list" data-toggle="list" href="#list-profile"
+               role="tab" aria-controls="profile" (click)="itemChange(2)">Bảo mật</a>
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===5}" id="list-person-address" data-toggle="list" href="#list-address"
+               role="tab" aria-controls="address" (click)="itemChange(5)">Sổ địa chỉ</a>
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===3}" id="list-messages-list"
+               data-toggle="list" href="#list-messages" role="tab" aria-controls="messages" (click)="itemChange(3)">Giỏ hàng</a>
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===4}" id="list-settings-list" data-toggle="list"
+               href="#list-settings" role="tab" aria-controls="settings" (click)="itemChange(4)">Đơn hàng</a>
+            <a class="list-group-item list-group-item-action" [ngClass]="{'active': itemList ===6}" id="list-finances-list" data-toggle="list"
+               href="#list-finances" role="tab" aria-controls="finances" (click)="itemChange(6)">Tài chính</a>
+          </div>
+        </div>
+        <div class="col-md-9 account-mobile">
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade" [ngClass]="{'show active': itemList === 1}" id="list-home" role="tabpanel"
+                 aria-labelledby="list-home-list">
+              <app-user-change
+                (emitService)="emitServiceUserChange($event)"
+              ></app-user-change>
+            </div>
+            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list" [ngClass]="{'show active': itemList === 2}">
+              <app-user-password
+                (emitServicePass)="emitServicePassChange($event)"
+              ></app-user-password>
+            </div>
+            <div class="tab-pane fade"
+                 [ngClass]="{'show active': itemList === 3}" id="list-messages" role="tabpanel"
+                 aria-labelledby="list-messages-list">
+              <app-card-list [cards]="cards"></app-card-list>
+            </div>
+            <div class="tab-pane fade" [ngClass]="{'show active': itemList === 4}" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list" >
+              <app-order-auction
+                *ngIf="!checkOrder && !checkOrderBuy"
+                (emitOrderStatus)="eventOrderStatus($event)"
+              ></app-order-auction>
+              <app-order-detail
+                *ngIf="checkOrder && !checkOrderBuy"
+                [orderDetail]="orderDetail"
+              ></app-order-detail>
+              <app-order-buy *ngIf="checkOrderBuy"
+                             [addressArr]="addressArr"
+                             (emitAddressStatus)="statusAddress($event)"
+                             (emitResetMessage)="eventResetMess($event)"
+                             (emitIdOrder)="emitGetOrderById($event)"
+              ></app-order-buy>
+            </div>
+            <div class="tab-pane fade" [ngClass]="{'show active': itemList === 5}" id="list-address" role="tabpanel" aria-labelledby="list-person-address" >
+              <app-address
+                [addressArr]="addressArr"
+                (emitServiceAddress)="emitAddressChange($event)"
+                (emitAddressStatus)="statusAddress($event)"></app-address>
+            </div>
+            <div class="tab-pane fade" [ngClass]="{'show active': itemList === 6}" id="list-finance" role="tabpanel" aria-labelledby="list-finances-list" >
+              <app-finance (emitIdOrderFromFinance)="showDetailOrderFromIdOrderFianance($event)"></app-finance>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

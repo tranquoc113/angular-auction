@@ -1,0 +1,221 @@
+<div class="row bs-wizard">
+
+  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 bs-wizard-step complete">
+    <div class="text-center bs-wizard-stepnum">
+      <span>Đăng Nhập</span>
+    </div>
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+    <span class="bs-wizard-dot">1</span>
+  </div>
+
+  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 bs-wizard-step" [ngClass]="{'active': !goEnd, 'complete': goEnd}">
+    <div class="text-center bs-wizard-stepnum">
+      <span class="hidden-xs">Địa Chỉ Giao Hàng</span>
+    </div>
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+    <span class="bs-wizard-dot">2</span>
+  </div>
+
+  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 bs-wizard-step disabled" [ngClass]="{'complete': goEnd}">
+    <div class="text-center bs-wizard-stepnum">
+      <span class="visible-xs-inline-block">Thanh Toán</span>
+    </div>
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+    <span class="bs-wizard-dot">3</span>
+  </div>
+
+</div>
+<div *ngIf="!goEnd">
+    <h3>
+       Địa chỉ giao hàng
+    </h3>
+  <div class="row">
+    <div class="card mb-2 col-md-5 mr-2 p-0" *ngFor="let item of addressArr">
+      <div class="card-body">
+      <span class="float-right"><a style="color: #007bff" class="mr-2" href="javascript:;" (click)="editAddress(item)">Chỉnh sửa</a><a
+        href="javascript:;" style="color: red" (click)="openModaldeleteAddress(template,item)" *ngIf="!item.priority">Xóa</a></span>
+        <h5 class="card-title">{{item.personName}} <span style="font-size: 10px;
+    color: #007bff;" *ngIf="item.priority==true">Mặc định</span></h5>
+        <p class="card-text">Địa chỉ: {{item.nameAdress}}
+        </p>
+        <p class="card-text">Điện thoại: {{item.phone}}</p>
+        <p class="card-text">
+          <button type="button" class="btn btn-danger btn-sm" (click)="GoEnd(item)">Giao đến địa chỉ này</button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <p class="other">
+      Bạn muốn giao hàng đến địa chỉ khác?
+      <a style="color: red" href="javascript:void(0)" (click)="addAddress()">
+        Thêm địa chỉ giao hàng mới
+      </a>
+    </p>
+  </div>
+
+  <div class="row" *ngIf="formAddressStatus">
+    <div class="col-md-10">
+      <form #addressForm="ngForm">
+
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input type="text" class="form-control col-md-6" #personName="ngModel" name="personName"
+                 [(ngModel)]="address.personName" required>
+          <div *ngIf="personName.invalid && (personName.dirty || personName.touched)">
+            <div *ngIf="personName.errors.required">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập họ tên.</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <input [pattern]="mobNumberPattern" type="number" class="form-control col-md-6" #phone="ngModel" name="phone"
+                 [(ngModel)]="address.phone"
+                 minlength="10" maxlength="10" required>
+          <div *ngIf="phone.invalid && (phone.dirty || phone.touched) || phone.errors">
+            <div *ngIf="phone.errors.required">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập số điện thoại.</label>
+            </div>
+            <div *ngIf="phone.errors?.minlength">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+            </div>
+            <div *ngIf="phone.errors?.maxlength">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+            </div>
+            <div *ngIf="phone.errors?.pattern">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Địa chỉ</label>
+          <textarea class="form-control col-md-6" rows="2" name="name" [(ngModel)]="address.nameAdress" #nameAdress="ngModel"
+                    required></textarea>
+          <div *ngIf="nameAdress.invalid && (nameAdress.dirty || nameAdress.touched)">
+            <div *ngIf="nameAdress.errors.required">
+              <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập địa chỉ.</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-auto">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input type="checkbox" class="custom-control-input" id="usingAddressAutoPerson" name="checkPriority"
+                     [(ngModel)]="address.priority">
+              <label class="custom-control-label" for="usingAddressAutoPerson">Sử dụng địa chỉ này làm mặc
+                định</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" [disabled]="!addressForm.form.valid" (click)="updateAddress()">Cập
+            nhật
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngIf="goEnd">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="Subhead">
+        <h2 class="Subhead-heading">Chi tiết đơn hàng <span style="font-size: 20px">#{{order.id}}</span></h2>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <span class="float-right"><a style="color: #007bff" class="mr-2" href="javascript:;" (click)="editAdressEnd()">Chỉnh sửa</a></span>
+          <h5 class="card-title">{{address.personName}}</h5>
+          <p class="card-text">Địa chỉ: {{address.nameAdress}}
+          </p>
+          <p class="card-text">Điện thoại: {{address.phone}}</p>
+        </div>
+      </div>
+      <table class="table" style="table-layout: fixed">
+        <thead>
+        <tr>
+          <th width="60%">Sản phẩm</th>
+          <th>Ngày lên đơn</th>
+          <th>Tạm tính(yên)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td width="60%">
+            <div class="row">
+              <div class="col-md-3"><img src="{{order.img}}"></div>
+              <div class="col-md-9">
+                <div>
+                  <p>{{order.name}}</p>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td><p class="font-weight-bold">{{order.date | date: 'dd/MM/yyyy'}}</p>
+          </td>
+          <td><span class="font-weight-bold">{{order.price | number}}</span></td>
+        </tr>
+        <tr>
+          <td class="text-right" colspan="2">
+            <p>Tạm tính(yên):</p>
+            <p>Phí vận chuyển(yên):</p>
+            <p>Tổng cộng(yên):</p>
+          </td>
+          <td>
+            <p class="font-weight-bold">{{order.price | number}}</p>
+            <p class="font-weight-bold">{{COD | number}}</p>
+            <p class="font-weight-bold">{{order.priceSum | number}}</p>
+          </td>
+        <tr>
+          <td></td>
+          <td class="text-right" colspan="2">
+            <div>
+              <button type="button" class="btn btn-danger btn-lg btn-block" (click)="buyOrder()">Đặt hàng</button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Có muốn xóa: {{address.personName}}?</p>
+    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="confirmDelete(address.id)"><i
+      class="fa fa-check"></i> Đồng ý
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()">
+      <i class="fa fa-close"></i> Hủy
+    </button>
+  </div>
+</ng-template>
+<div bsModal #childModalFinanceUser="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-sm">
+    <div id="container" class="finance-user-modal">
+      <div id="error-box">
+        <div class="face">
+          <div class="eye"></div>
+          <div class="eye right"></div>
+          <div class="mouth sad"></div>
+        </div>
+        <div class="shadow move"></div>
+        <div class="message"><h1 class="alert">Lỗi!</h1><p>Tài chính của bạn không đủ để mua.</p></div>
+        <button class="button-box"><h1 class="red">Thử lại</h1></button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

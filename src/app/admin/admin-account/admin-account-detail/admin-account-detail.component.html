@@ -1,0 +1,179 @@
+<section class="content-layout">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <div class="container-fluid container-custom-nav">
+        <li class="breadcrumb-item"><a href="javascript:;" routerLink=""><i class="fa fa-home"></i> Trang chủ</a></li>
+      </div>
+    </ol>
+  </nav>
+  <div class="container-fluid">
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+
+            <span *ngIf="!user.id">Thêm mới tài khoản</span>
+            <span *ngIf="user.id">Cập nhật  tài khoản</span>
+          </div>
+          <div class="card-body">
+            <form #accountForm="ngForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Họ và tên <span class="required">*</span></label>
+                    <div class="col-md-10">
+                      <input type="text" class="form-control" name="fullName" [(ngModel)]="user.fullName" #fullName="ngModel"
+                             required>
+                      <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">
+                        <div *ngIf="fullName.errors.required">
+                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập họ tên.</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Email <span class="required">*</span></label>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" #email="ngModel" [(ngModel)]="user.email" name="email" required
+                             [pattern]="emailRegex" required>
+                      <div *ngIf="email.errors?.pattern">
+                        <label class="invalid">Email nhập không đúng.</label>
+                      </div>
+                      <div [ngClass]="existEmail?'show':'hide'" class="invalid">
+                        Email đã đăng ký.
+                      </div>
+                      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors.required">
+                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập email.</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="!user.id">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Mật khẩu <span class="required">*</span></label>
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <input [type]="showPass ? 'text' : 'password'" class="form-control border-right-0"
+                               #password="ngModel" [(ngModel)]="user.password" name="password" minlength="6" maxlength="20" required>
+
+                        <span class="input-group-append">
+                         <div class="input-group-text bg-transparent"><a title="Hiển thị mật khẩu"
+                                                                         (click)="showPassword()"><i
+                           class="fa fa-eye"></i></a></div>
+                      </span>
+                      </div>
+                      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <div *ngIf="password.errors.required">
+                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập mật khẩu.</label>
+                        </div>
+                        <div *ngIf="password.errors?.minlength">
+                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Phải 6 ký tự trở lên.</label>
+                        </div>
+                        <div *ngIf="password.errors?.maxlength">
+                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Phải dưới 20 ký tự.</label>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Năm sinh</label>
+                    <div class="col-md-8">
+                      <input type="text"
+                             class="form-control"
+                             name="birthday"
+                             bsDatepicker [(bsValue)]="birthDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Chức danh</label>
+                    <div class="col-md-10 form-group">
+                      <select class="form-control" [(ngModel)]="user.role" name="role" >
+                        <option *ngFor="let role of roleArr" [ngValue]="role.roleName">{{role.des}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+<!--                <div class="col-md-6">-->
+<!--                  <div class="form-group row">-->
+<!--                    <label class="col-md-3 col-form-label">Số điện thoại</label>-->
+<!--                    <div class="col-md-8">-->
+<!--                      <input appNumberPhone type="text" class="form-control" #phone="ngModel" name="phone" [(ngModel)]="user.phone" minlength="10" maxlength="10">-->
+<!--                      <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">-->
+<!--                        <div *ngIf="phone.errors?.minlength">-->
+<!--                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>-->
+<!--                        </div>-->
+<!--                        <div *ngIf="phone.errors?.maxlength">-->
+<!--                          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+              </div>
+
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-1 col-form-label">Địa chỉ</label>-->
+<!--                <div class="col-md-5 form-group">-->
+<!--                  <textarea class="form-control"  rows="3" name="address" [(ngModel)]="user.address"></textarea>-->
+<!--                </div>-->
+<!--              </div>-->
+
+              <div class="form-group row">
+                <label class="col-md-1 col-form-label">Giới tính</label>
+                <div class="col-md-10">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
+                            [checked]='user.sex' (click)="checkedSex()">
+                    <label class="custom-control-label" for="customRadioInline1">Nam</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" [checked]='!user.sex'>
+                    <label class="custom-control-label" for="customRadioInline2" (click)="checkedSex()">Nữ</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-1 col-form-label"></label>
+                <div class="col">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" name="active" [(ngModel)]="user.active">
+                    <label class="custom-control-label" for="customCheck1">Kích hoạt </label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-md-1 col-form-label"></label>
+                <div class="col-md-10">
+                  <button type="submit" class="btn btn-primary mr-1"  (click)="addUser()">Thêm tài khoản</button>
+                  <button type="submit" class="btn btn-success" [disabled]="!accountForm.form.valid" (click)="saveUser()">Lưu tài khoản</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

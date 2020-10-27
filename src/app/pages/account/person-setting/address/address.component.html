@@ -1,0 +1,95 @@
+<div *ngIf="listAddress">
+  <div class="Subhead">
+    <h2 class="Subhead-heading">Danh sách địa chỉ</h2>
+  </div>
+  <div class="card text-center mb-2">
+    <div class="card-body">
+      <a href="javascript:;" (click)="addAddress()"><i class="fa fa-plus"></i> Thêm địa chỉ</a>
+    </div>
+  </div>
+  <div class="card mb-2" *ngFor="let item of addressArr">
+    <div class="card-body">
+      <span class="float-right"><a style="color: #007bff" class="mr-2" href="javascript:;" (click)="editAddress(item)">Chỉnh sửa</a><a
+        href="javascript:;" style="color: red" (click)="openModaldeleteAddress(template,item)" *ngIf="!item.priority">Xóa</a></span>
+      <h5 class="card-title">{{item.personName}} <span style="font-size: 12px;
+    color: #007bff;" *ngIf="item.priority==true">Địa chỉ mặc định</span></h5>
+      <p class="card-text">Địa chỉ: {{item.nameAdress}}
+      </p>
+      <p class="card-text">Điện thoại: {{item.phone}}</p>
+      <p class="card-text"><small class="text-muted">Bổ sung vào ngày {{item.dateCreate | date: 'dd/MM/yyyy'}}</small></p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!listAddress">
+  <div class="Subhead">
+    <h2 class="Subhead-heading">Thêm địa chỉ</h2>
+  </div>
+  <form #addressForm="ngForm">
+
+    <div class="form-group">
+      <label>Họ và tên</label>
+      <input type="text" class="form-control col-md-6" #personName="ngModel" name="personName" [(ngModel)]="address.personName" required>
+      <div *ngIf="personName.invalid && (personName.dirty || personName.touched)">
+        <div *ngIf="personName.errors.required">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập họ tên.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Số điện thoại</label>
+      <input [pattern]="mobNumberPattern" type="number" class="form-control col-md-6" #phone="ngModel" name="phone" [(ngModel)]="address.phone"
+             minlength="10" maxlength="10" required>
+      <div *ngIf="phone.invalid && (phone.dirty || phone.touched) || phone.errors">
+        <div *ngIf="phone.errors.required">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập số điện thoại.</label>
+        </div>
+        <div *ngIf="phone.errors?.minlength">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+        </div>
+        <div *ngIf="phone.errors?.maxlength">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+        </div>
+        <div *ngIf="phone.errors?.pattern">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> SĐT không đúng.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Địa chỉ</label>
+      <textarea class="form-control col-md-6" rows="2" name="name" [(ngModel)]="address.nameAdress" #nameAdress="ngModel" required></textarea>
+      <div *ngIf="nameAdress.invalid && (nameAdress.dirty || nameAdress.touched)">
+        <div *ngIf="nameAdress.errors.required">
+          <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập địa chỉ.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-auto">
+        <div class="custom-control custom-checkbox mr-sm-2">
+          <input type="checkbox" class="custom-control-input" id="usingAddressAutoPerson" name="checkPriority"
+                 [(ngModel)]="address.priority">
+          <label class="custom-control-label" for="usingAddressAutoPerson">Sử dụng địa chỉ này làm mặc định</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!addressForm.form.valid" (click)="updateAddress()">Cập
+        nhật
+      </button>
+    </div>
+  </form>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Có muốn xóa: {{address.personName}}?</p>
+    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="confirmDelete(address.id)"><i
+      class="fa fa-check"></i> Đồng ý</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()">
+      <i class="fa fa-close"></i> Hủy</button>
+  </div>
+</ng-template>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

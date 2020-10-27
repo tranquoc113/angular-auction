@@ -1,0 +1,75 @@
+<div class="Subhead">
+  <h2 class="Subhead-heading">Giỏ hàng <span style="font-size: 14px">({{cards.length}} sản phẩm)</span></h2>
+</div>
+<table class="table table-borderless table-card" style="table-layout: fixed">
+  <!-- <thead>
+      <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Auction ID</th>
+          <th scope="col">Hình</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Giá đấu</th>
+          <th scope="col">Thời gian</th>
+      </tr>
+  </thead> -->
+  <tbody>
+  <tr *ngFor="let item of cards; let i = index">
+    <!-- <th scope="row">{{i+1}}</th> -->
+    <td>
+      <span>{{item.auctionID}}</span>
+      <button type="button" class="btn btn-warning btn-sm d-block" *ngIf="item.repeatAuction" (click)="openModalAuction(item)">Đấu lại</button>
+      <a class="card-history-auction" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="openModalHistory(item.auctionID)">Lịch sử đấu giá</a>
+    </td>
+    <td class="img-mobile">
+      <div>
+        <img class="cart-img" src="{{item.img}}">
+      </div>
+    </td>
+    <td width="40%">
+      <a href="javascript:;" [routerLink]="['/yahoo-auction/detail', item.auctionID]">{{item.name}}</a>
+    </td>
+    <td>
+      <div class="text-center"><span class="font-weight-bold">{{item.priceMain|number}}</span>
+      <span class="d-block">yên</span></div>
+    </td>
+    <td class="text-center">
+      <span>{{item.timeEnd | date: 'dd-MM-yyyy'}}</span>
+      <span class="d-block">{{item.timeEnd | date: 'H:MM'}} </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <app-history-auction [historyAuctionsIn]="historyAuctions"></app-history-auction>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="../../../../assets/img/yahoo-auction/yahoo-auction.jpg" style="width: 15%">
+        <h4 class="modal-title"> Đấu giá</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-auto col-form-label">Giá</label>
+          <div class="col">
+            <input appNumberPaste type="text" class="form-control" name="price" [ngModel]="price | numberPipe" (ngModelChange)="price=$event" (keyup)="changePrice()">
+            <label class="invalid" *ngIf="priceAuctionErro"> <i class="fa fa-exclamation-triangle"></i> Phải cao hơn giá hiện tại.</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" (click)="auction()" [disabled]="priceAuctionErro">Đấu giá</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="childModal.hide()">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

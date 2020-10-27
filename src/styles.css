@@ -1,0 +1,48 @@
+@import "assets/css/page-custome.css";
+@import "assets/css/admin-layout.css";
+@import "assets/css/admin-layout-custom-color.css";
+@import "assets/css/style.css";
+
+body {
+  line-height: 1.7;
+  font-family: "Roboto","HelveticaNeue","Helvetica Neue",sans-serif;
+  color: #444;
+  background: #fff;
+  font-size: 14px;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+ul {
+  list-style: none outside;
+}
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+a:focus {
+  outline: none;
+}
+a{
+  color: #444;
+}
+a:hover {
+  color: #eb3e32;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* end header 2 */
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background: #eb3e32 !important;
+}
+.show{
+  display: block;
+}
+.hide{
+  display: none !important;
+}

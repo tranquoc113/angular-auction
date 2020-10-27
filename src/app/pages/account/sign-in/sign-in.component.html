@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Đăng nhập</h5>
+          <form class="form-signin" #signForm="ngForm">
+            <div class="alert alert-danger" role="alert" *ngIf="errFail">
+              Email hoặc mật khẩu không đúng!
+            </div>
+            <div class="form-label-group">
+              <input type="text" class="form-control" #email="ngModel" [(ngModel)]="user.email" name="email"
+                     [pattern]="emailRegex" placeholder="Địa chỉ email" required autofocus>
+              <div class="ml-2">
+                <div *ngIf="email.errors?.pattern">
+                  <label class="invalid"><i class="fa fa-exclamation-triangle"></i> Email nhập không đúng.</label>
+                </div>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                  <div *ngIf="email.errors.required">
+                    <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập email.</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" class="form-control border-right-0"
+                       #password="ngModel" [(ngModel)]="user.password" name="password" minlength="6" maxlength="20" required placeholder="Mật khẩu">
+              <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.errors.required">
+                  <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Nhập mật khẩu.</label>
+                </div>
+                <div *ngIf="password.errors?.minlength">
+                  <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Phải 6 ký tự trở lên.</label>
+                </div>
+                <div *ngIf="password.errors?.maxlength">
+                  <label class="invalid"> <i class="fa fa-exclamation-triangle"></i> Phải dưới 20 ký tự.</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="custom-control custom-checkbox mb-3">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="savePass" name="savePa">
+              <label class="custom-control-label" for="customCheck1">Lưu mật khẩu</label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" (click)="login()" [disabled]="!signForm.form.valid">Đăng nhập</button>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" routerLink="/sign-up">Tạo tài khoản mới</button>
+
+<!--            <hr class="my-4">-->
+<!--            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fa fa-google mr-2"></i> Sign in with Google</button>-->
+<!--            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fa fa-facebook-f mr-2"></i> Sign in with Facebook</button>-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>

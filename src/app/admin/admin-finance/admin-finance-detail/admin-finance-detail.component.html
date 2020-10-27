@@ -1,0 +1,186 @@
+<section class="content-layout">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <button class="btn btn-primary btn-sm" type="button" (click)="back()"><i
+        class="fa fa-arrow-left"></i> Trở lại
+      </button>
+      </li>
+    </ol>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h5>Số dư:  <span><span class="font-weight-bold">{{sumMoney}}</span> yên</span></h5>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-auto col-form-label">Hiển thị</label>
+          <div class="col-auto">
+            <select class="form-control" [(ngModel)]="itemsPerPage" name="itemsPerPage">
+              <option value="10">10́</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm theo đơn hàng" name="searchText" [(ngModel)]="keySearch" (keydown.enter)="searchFinance()">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" (click)="searchFinance()">
+              <i class="fa fa-search"></i>
+            </button>
+            <button class="btn btn-light" type="button" data-toggle="modal" data-target=".adminFinanceDetail">
+              <i class="fa fa-expand"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered table-responsive-sm" style="table-layout: fixed;">
+          <thead>
+          <tr>
+            <th width="4%">STT</th>
+            <th>Vào lúc</th>
+            <th>Trạng thái</th>
+            <th class="text-center">Tài chính(yên)</th>
+            <th>Ghi chú</th>
+            <th width="10%">Chức năng</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let item of financeHistory; let i = index">
+            <tr>
+              <td>{{i + 1}}</td>
+              <td class="font-weight-bold">{{item.dateCreate|date: 'dd/MM/yyyy H:ss:mm'}}</td>
+              <td>
+                <span class="badge badge-success" *ngIf="item.financeStatusID=='BUY'">Mua hàng</span>
+                <span class="badge badge-primary" *ngIf="item.financeStatusID=='ADD'">Thêm mới</span>
+                <span class="badge badge-info" *ngIf="item.financeStatusID=='UPDATE'">Cập nhật</span>
+              </td>
+              <td >
+                <span class="font-weight-bold text-center" [ngClass]="IdUpdate==item.id?'hide':'show'">{{item.moneyInput | number}}</span>
+                <div *ngIf="IdUpdate == item.id" class="d-flex form-update"><input type="text" class="form-control form-control-sm" name="moneyInput" [ngModel]="moneyUpdate | numberPipe" (ngModelChange)="moneyUpdate=$event" (keydown.enter)="updateMoneyInput(item)" (keyup)="changeMoney()"><a class="fts-100 badge badge-danger"  title="Hủy" (click)="cancelUpdate()"><i
+                class="fa fa-times" ></i></a></div>
+              </td>
+              <td class="font-weight-bold">
+                <span *ngIf="item.financeStatusID=='BUY'">Đơn hàng <a href="javascript:;" [routerLink]="['../../../order/detail', item.orderID]"><span style="color: red">#{{item.orderID}}</span></a></span>
+                <span *ngIf="item.financeStatusID!=='BUY'">{{item.fullName}}</span>
+              </td>
+              <td class="icon-event">
+                <a class="fts-100 badge badge-primary"  title="Sửa tài chính" (click)="editUpdate(item)" *ngIf="item.financeStatusID!='BUY'"><i
+                  class="fa fa-edit" ></i></a>
+                <a class="fts-100 badge badge-info"
+                   title="Xem chi tiết" [routerLink]="['../../../order/detail', item.orderID]" *ngIf="item.financeStatusID=='BUY'"><i class="fa fa-eye"></i></a>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-end">
+        <pagination [totalItems]="toTal" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;"
+                    firstText="&laquo;"
+                    lastText="&raquo;" (pageChanged)="appPageChange($event)" [maxSize]="5" [itemsPerPage]="itemsPerPage">
+        </pagination>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="modal fade adminFinanceDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tìm kiếm nâng cao</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Từ khóa ̣</label>
+                <div class="col-md-10">
+                  <input type="text" class="form-control" name="txtSearch" [(ngModel)]="keySearch" placeholder="Tìm theo đơn hàng">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Trạng thái</label>
+                <div class="col-md-8">
+                  <select class="form-control" [(ngModel)]="statusFinance" name="statusFinance">
+                    <option value="" selected>Tất cả</option>
+                    <option value="ADD">Thêm</option>
+                    <option value="UPDATE">Cập nhật</option>
+                    <option value="BUY">Mua hàng</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Sắp xếp</label>
+                <div class="col-md-8">
+                  <select class="form-control" [(ngModel)]="sortType" name="sortType">
+                    <option value="NEW">Mới nhất</option>
+                    <option value="OLD">Cũ nhất</option>
+                    <option value="PRICEDES">Tiền cao nhất</option>
+                    <option value="PRICEASC">Tiền thấp nhất</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Từ ngày</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                         [(ngModel)]="fromDay"
+                         bsDatepicker
+                         [minDate]="minDate"
+                         [maxDate]="maxDate"
+                         name="fromDate">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Đến ngày</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                         [(ngModel)]="toDay"
+                         bsDatepicker
+                         [minDate]="minDate"
+                         [maxDate]="maxDate"
+                         name="fromDate">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" (click)="searchFinance()" data-dismiss="modal"><i class="fa fa-search"></i> Tìm</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>
+

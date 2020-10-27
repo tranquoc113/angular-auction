@@ -1,0 +1,15 @@
+.required{
+  color: red;
+}
+.invalid{
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+.ng-valid[required], .ng-valid.required  {
+  border-color: #28a745;
+}
+.ng-invalid:not(form)  {
+  border-color: #dc3545;
+}

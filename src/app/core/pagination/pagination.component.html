@@ -1,0 +1,12 @@
+<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+  <li class="pagination-prev page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+    <a class="page-link" (click)="setPage(pager.currentPage - 1)">&lsaquo;</a>
+  </li>
+  <li class="pagination-page page-item" *ngFor="let page of pager.pages"
+      [ngClass]="{active:pager.currentPage === page}">
+    <a class="page-link" (click)="setPage(page)">{{page}}</a>
+  </li>
+  <li class="pagination-next page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+    <a class="page-link" (click)="setPage(pager.currentPage + 1)">&rsaquo;</a>
+  </li>
+</ul>

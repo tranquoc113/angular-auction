@@ -1,0 +1,108 @@
+<nav id="nav_main">
+  <ul class="nav_main_lst">
+    <li class="nav_main_item"><a class="nav_main_url" href="javascript:;"> <i class="fa fa-shopping-cart"></i> <span>Thông báo</span>
+    </a></li>
+    <li class="nav_main_item"><a title="Giỏ hàng" class="nav_main_url" href="javascript:;"> <i
+      class="fa fa-shopping-cart"></i> <span>Giỏ hàng</span> </a></li>
+    <li class="nav_main_item"><a title="Yêu thích" class="nav_main_url" href="javascript:;"> <i
+      class="fa fa-heart"></i> <span>Yêu thích</span> </a></li>
+  </ul>
+</nav>
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="container" *ngIf="rakuten.mediumImageUrls.length==0">
+          <div class="mySlideImage">
+            <img src="../../../../assets/img/no-img.jfif"
+                 class="img-fluid img-thumbnail">
+          </div>
+        </div>
+        <div class="container" *ngIf="rakuten.mediumImageUrls.length>0">
+          <!-- Full-width images with number text -->
+          <div class="mySlideImage" *ngFor="let item of rakuten.mediumImageUrls; let i= index"
+               [ngClass]="statusSlides===i+1? 'mySlides-show':'mySlide'">
+            <div class="numbertext">{{i + 1}} / {{rakuten.mediumImageUrls.length}}</div>
+            <img src="{{item.imageUrl}}" class="img-fluid img-thumbnail">
+          </div>
+          <a [ngClass]="statusSlides > 1? 'show': 'hide' " class="prev" (click)="plusSlides(-1)">&#10094;</a>
+          <a [ngClass]="statusSlides < rakuten.mediumImageUrls.length? 'show': 'hide' " class="next"
+             (click)="plusSlides(1)">&#10095;</a>
+          <!-- Thumbnail images -->
+          <div class="row m-0" *ngIf="rakuten.mediumImageUrls.length>1">
+            <div class="column" *ngFor="let item of rakuten.mediumImageUrls; let i= index">
+              <img class="mySlideImage-active cursor w-10" src="{{item.imageUrl}}" (click)="showSlides(i+1)"
+                   [ngClass]="statusSlides==i+1?'active':''">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="detail-product-right">
+          <div class="row">
+            <div class="Price__body">
+              <p class="font-weight-bold">{{rakuten.itemName}}</p>
+              <p class="Price__value text-center">{{rakuten.itemPrice| number}} <span class="Price__tax"> yên</span>
+              </p>
+            </div>
+          </div>
+          <!-- end row -->
+          <div class="row mb-1">
+            <div class="col-auto mt-2">Số lượng:</div>
+            <div class="input-group bootstrap-touchspin">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default bootstrap-touchspin-btn" type="button">-</button>
+                  </span>
+              <input type="tel" name="qty" value="1" min="1" max="100" class="form-control font-weight-bold"
+                     style="display: block;">
+              <span class="input-group-btn">
+                    <button class="btn btn-default bootstrap-touchspin-btn" type="button">+</button>
+                  </span>
+            </div>
+          </div>
+          <div class="row p-2" id="btn-shop-cart">
+
+            <button type="button" class="btn btn-danger btn-lg btn-block"><i class="fa fa-shopping-cart"></i> Mua ngay
+            </button>
+          </div>
+          <!-- end row -->
+
+          <div class="row" style="border-top: 1px solid #d3d2cc">
+            <div class="ProductInformation__item">
+              <div class="Seller">
+                <div class="Seller__title sellerInfo">
+                  <p class="Seller__titleText">Thông tin người bán</p>
+                </div>
+                <div class="row m-0">
+                  <div class="col p-0"><i class="fa fa-home"></i>	&nbsp;{{rakuten.shopCode}}</div>
+                  <div class="col p-0"><i class="fa fa-eye"></i> <a href="{{rakuten.shopUrl}}" class="Seller__other">	&nbsp; Xem
+                    shop</a></div>
+                </div>
+                <div class="row ml-0 mt-2">
+                  <a href="{{rakuten.itemUrl}}" class="button_secondary button_full mb-3" target="_blank"> <span><i
+                    class="fa fa-desktop"></i> Xem trên Rakuten</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid mt-3" *ngIf="rakuten.itemCaption">
+        <div class="card">
+          <div class="card-header text-danger" style="font-size: 20px;">
+            Mô tả sản phẩm
+            <div class="float-right"><a href="javascript:;" (click)="openTranslateDes()"><i class="fa fa-language"
+                                                                                            aria-hidden="true"></i> Dịch</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div [innerHTML]="rakuten.itemCaption"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner [showSpinner]="showSpinner"></app-spinner>
